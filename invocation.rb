@@ -9,7 +9,7 @@ module Booty
     end
 
     def proceed
-      instance.send(@method, @arguments) 
+      instance.public_send(@method, @arguments) 
     end
   end
 end
