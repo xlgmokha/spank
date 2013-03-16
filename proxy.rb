@@ -2,8 +2,8 @@ require 'invocation'
 
 module Booty
   class Proxy
-    def initialize(instance)
-      @instance = instance
+    def initialize(target)
+      @target = target
     end
 
     def add(method, interceptor)
@@ -13,11 +13,11 @@ module Booty
     end
 
     def create_invocation_for(method, args)
-      Invocation.new(@instance, method, args)
+      Invocation.new(@target, method, args)
     end
 
     def method_missing(method, *args, &block)
-      @instance.send(method)
+      @target.public_send(method, *args, block)
     end
   end
 end
