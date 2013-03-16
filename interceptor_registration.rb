@@ -12,7 +12,7 @@ module Booty
 
     def intercept(instance)
       proxy= Proxy.new(instance)
-      proxy.add(@method, @interceptor)
+      proxy.add_interceptor(@method, @interceptor)
       proxy
     end
   end

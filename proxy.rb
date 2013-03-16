@@ -6,7 +6,7 @@ module Booty
       @target = target
     end
 
-    def add(method, interceptor)
+    def add_interceptor(method, interceptor)
       self.class.define_method(method.to_sym) do |*args|
         interceptor.intercept(create_invocation_for(method, args))
       end
