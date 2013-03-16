@@ -2,14 +2,19 @@ module Booty
   class Invocation
     attr_reader :instance, :method, :arguments
 
-    def initialize(instance, method, args)
+    def initialize(instance, method, args, block)
       @instance = instance
       @method = method
       @arguments = args
+      @block = block
     end
 
     def proceed
-      instance.public_send(@method, @arguments) 
+      if @block
+        instance.public_send(@method, @arguments, @block)
+      else
+        instance.public_send(@method, @arguments)
+      end
     end
   end
 end

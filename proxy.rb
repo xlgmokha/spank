@@ -7,13 +7,13 @@ module Booty
     end
 
     def add_interceptor(method, interceptor)
-      self.class.define_method(method.to_sym) do |*args|
-        interceptor.intercept(create_invocation_for(method, args))
+      self.class.define_method(method.to_sym) do |*args, &block|
+        interceptor.intercept(create_invocation_for(method, args, block))
       end
     end
 
-    def create_invocation_for(method, args)
-      Invocation.new(@target, method, args)
+    def create_invocation_for(method, args, block)
+      Invocation.new(@target, method, args, block)
     end
 
     def method_missing(method, *args, &block)
