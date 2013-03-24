@@ -7,21 +7,11 @@ module Booty
     end
 
     def add_interceptor(method, interceptor)
-      #self.class.define_method(method.to_sym) do |*args, &block|
-        #interceptor.intercept(create_invocation_for(method, args, block))
-      #end
-
-      mod = Module.new do
-        define_method(method.to_sym) do |*args, &block|
-          p "CALLING #{method}"
-          invocation = create_invocation_for(method, args, block)
-          interceptor.intercept(invocation)
-          invocation.result
-        end
-      end
-      self.extend(mod)
+      self.extend(create_module_for(method, interceptor))
       self
     end
+
+    private
 
     def create_invocation_for(method, args, block)
       Invocation.new(@target, method, args, block)
@@ -32,6 +22,16 @@ module Booty
         @target.public_send(method, *args, block)
       else
         @target.public_send(method, *args)
+      end
+    end
+
+    def create_module_for(method, interceptor)
+      Module.new do
+        define_method(method.to_sym) do |*args, &block|
+          invocation = create_invocation_for(method, args, block)
+          interceptor.intercept(invocation)
+          invocation.result
+        end
       end
     end
   end

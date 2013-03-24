@@ -10,7 +10,6 @@ module Booty
     end
 
     def proceed
-        p "PROCEED #{@instance} #{@method} #{@arguments} #{@block}"
       if @block
         @result = @instance.public_send(@method, @arguments, @block)
       else
