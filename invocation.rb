@@ -1,6 +1,6 @@
 module Booty
   class Invocation
-    attr_reader :instance, :method, :arguments
+    attr_reader :instance, :method, :arguments, :result
 
     def initialize(instance, method, args, block)
       @instance = instance
@@ -10,10 +10,11 @@ module Booty
     end
 
     def proceed
+        p "PROCEED #{@instance} #{@method} #{@arguments} #{@block}"
       if @block
-        instance.public_send(@method, @arguments, @block)
+        @result = @instance.public_send(@method, @arguments, @block)
       else
-        instance.public_send(@method, @arguments)
+        @result = @instance.public_send(@method, @arguments)
       end
     end
   end
