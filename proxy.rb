@@ -17,7 +17,11 @@ module Booty
     end
 
     def method_missing(method, *args, &block)
-      @target.public_send(method, *args, block)
+      if block
+        @target.public_send(method, *args, block)
+      else
+        @target.public_send(method, *args)
+      end
     end
   end
 end
