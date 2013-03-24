@@ -1,6 +1,11 @@
 require 'component'
 
 module Booty
+  class ContainerError < Exception
+    def intialize(message)
+      @message = message
+    end
+  end
   class Container
     def initialize
       @items = {}
@@ -23,7 +28,6 @@ module Booty
     def build!(type)
       constructor = type.instance_method('initialize')
       parameters = constructor.parameters.map do |req, parameter|
-        #logger.info("attempting to resolve #{parameter}")
         resolve(parameter.to_sym)
       end
       type.send(:new, *parameters)
@@ -42,9 +46,7 @@ module Booty
       begin
         lambda.call
       rescue => e
-        error ||= "Oops: #{e}"
-        logger.error(error)
-        nil
+        raise Booty::ContainerError.new(error ||= "Oops: #{e}")
       end
     end
   end
