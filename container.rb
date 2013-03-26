@@ -17,10 +17,10 @@ module Booty
       component
     end
     def resolve(key)
-      instantiate(components_for(key).first)
+      instantiate(components_for(key).first, key)
     end
     def resolve_all(key)
-      components_for(key).map {|item| instantiate(item) }
+      components_for(key).map {|item| instantiate(item, key) }
     end
     def build(type)
       try("I could not create: #{type}"){ build!(type) }
@@ -39,7 +39,8 @@ module Booty
       @items[key] = [] unless @items[key]
       @items[key]
     end
-    def instantiate(component)
+    def instantiate(component, key)
+      raise ContainerError.new("#{key} is not a registered component.") unless component
       component.create(self)
     end
     def try(error = nil, &lambda)
