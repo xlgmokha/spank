@@ -1,6 +1,6 @@
 # Spank
 
-TODO: Write a gem description
+A simple light weight inversion of control container written in ruby.
 
 ## Installation
 
@@ -18,7 +18,91 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Register a single component and resolve it.
+
+```ruby
+
+  container = Container.new
+  container.register(:item) do
+    "ITEM"
+  end
+  container.register(:pants) { jeans }
+  container.register(:pants) { dress_pants }
+  item = container.resolve(:item)
+  
+```
+
+Register multiple items, and resolve them.
+
+```ruby
+
+  container = Container.new
+  container.register(:pants) { jeans }
+  container.register(:pants) { dress_pants }
+  pants = container.resolve_all(:item)
+  
+```
+
+Register a singleton.
+
+```ruby
+
+  container = Container.new
+  container.register(:singleton) { fake }.as_singleton
+  single_instance = container.resolve(:singleton)
+  same_instance = container.resolve(:singleton)
+  
+```
+
+Automatic dependency resolution.
+
+```ruby
+
+  class Child
+    def initialize(mom,dad)
+    end
+  end
+  
+  container = Container.new
+  container.register(:mom) { mom }
+  container.register(:dad) { dad }
+  child = sut.build(Child)
+      
+```
+
+Register selective interceptors.
+
+```ruby
+
+  class Interceptor
+    def intercept(invocation)
+      invocation.proceed
+    end
+  end
+  
+  class Command
+    def run(input)
+    end
+  end
+  
+  container = Container.new
+  container.register(:command) { Command.new }.intercept(:run).with(Interceptor.new)
+  proxy = container.resolve(:command)
+  proxy.run("hi")
+      
+```
+
+[Static gateway](http://codebetter.com/jpboodhoo/2007/10/15/the-static-gateway-pattern/) to connect to the container.
+
+```ruby
+  
+  container = Container.new
+  Spank::IOC.bind_to(container)
+  Spank::IOC.resolve(:item)
+      
+```
+
+Enjoy!
 
 ## Contributing
 
