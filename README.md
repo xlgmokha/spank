@@ -39,7 +39,7 @@ Register multiple items, and resolve them.
   container = Container.new
   container.register(:pants) { jeans }
   container.register(:pants) { dress_pants }
-  pants = container.resolve_all(:item)
+  pants = container.resolve_all(:pants)
   
 ```
 
