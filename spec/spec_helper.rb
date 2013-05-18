@@ -1,2 +1,4 @@
-require 'fakes-rspec'
+require 'simplecov'
+SimpleCov.start
+require 'rspec-fakes'
 require 'spank'

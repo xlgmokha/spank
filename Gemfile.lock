@@ -1,12 +1,32 @@
 PATH
   remote: .
   specs:
-    spank (0.0.1)
+    spank (0.0.2)
 
 GEM
   remote: https://rubygems.org/
   specs:
+    developwithpassion_arrays (0.0.1)
+    developwithpassion_fakes (0.1.1)
+      developwithpassion_arrays
+    diff-lcs (1.2.4)
+    multi_json (1.7.3)
     rake (10.0.3)
+    rspec (2.13.0)
+      rspec-core (~> 2.13.0)
+      rspec-expectations (~> 2.13.0)
+      rspec-mocks (~> 2.13.0)
+    rspec-core (2.13.1)
+    rspec-expectations (2.13.0)
+      diff-lcs (>= 1.1.3, < 2.0)
+    rspec-fakes (0.0.9)
+      developwithpassion_fakes
+      rspec
+    rspec-mocks (2.13.1)
+    simplecov (0.7.1)
+      multi_json (~> 1.0)
+      simplecov-html (~> 0.7.1)
+    simplecov-html (0.7.1)
 
 PLATFORMS
   ruby
@@ -14,4 +34,7 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.3)
   rake
+  rspec
+  rspec-fakes
+  simplecov
   spank!
