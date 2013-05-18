@@ -1,6 +1,4 @@
-require 'invocation'
-
-module Booty
+module Spank
   class Proxy
     def initialize(target)
       @target = target

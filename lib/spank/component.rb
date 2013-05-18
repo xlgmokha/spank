@@ -1,7 +1,4 @@
-require 'lambda_behaviours'
-require "interceptor_registration"
-
-module Booty
+module Spank
   class Component
     include LambdaBehaviours
 

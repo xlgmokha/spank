@@ -1,6 +1,6 @@
 require "spec_helper"
 
-module Booty
+module Spank
   describe Proxy do
     let(:sut) { Proxy.new(target) }
     let(:target) { fake }

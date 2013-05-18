@@ -1,6 +1,4 @@
-require 'component'
-
-module Booty
+module Spank
   class ContainerError < Exception
     def intialize(message)
       @message = message
@@ -47,7 +45,7 @@ module Booty
       begin
         lambda.call
       rescue => e
-        raise Booty::ContainerError.new(error ||= "Oops: #{e}")
+        raise Spank::ContainerError.new(error ||= "Oops: #{e}")
       end
     end
   end

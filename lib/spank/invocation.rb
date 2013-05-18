@@ -1,4 +1,4 @@
-module Booty
+module Spank
   class Invocation
     attr_reader :instance, :method, :arguments, :result
 

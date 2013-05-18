@@ -1,4 +1,4 @@
-module Booty
+module Spank
   class IOC
     def self.bind_to(container)
       @@container = container

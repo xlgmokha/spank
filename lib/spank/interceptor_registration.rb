@@ -1,6 +1,4 @@
-require 'proxy'
-
-module Booty
+module Spank
   class InterceptorRegistration
     def initialize(method_symbol)
       @method = method_symbol
