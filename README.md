@@ -2,6 +2,8 @@
 
 A simple light weight inversion of control container written in ruby.
 
+[![Build Status](https://travis-ci.org/mokhan/spank.png)](https://travis-ci.org/mokhan/spank)
+
 ## Installation
 
 Add this line to your application's Gemfile:
