@@ -23,11 +23,9 @@ Register a single component and resolve it.
 ```ruby
 
   container = Container.new
-  container.register(:item) do
+  container.register(:item) do |container|
     "ITEM"
   end
-  container.register(:pants) { jeans }
-  container.register(:pants) { dress_pants }
   item = container.resolve(:item)
   
 ```
