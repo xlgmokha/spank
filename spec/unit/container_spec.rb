@@ -1,6 +1,6 @@
 require "spec_helper"
 
-module Booty
+module Spank
   describe Container do
     let(:sut) { Container.new }
 
