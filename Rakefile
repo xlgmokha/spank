@@ -6,7 +6,12 @@ task :spec do
   system 'rspec'
 end
 
-task :build do
+task :clean do
+  system 'rm *.gem'
+  system 'rm -fr pkg'
+end
+
+task :build => :clean do
   system 'gem build spank.gemspec'
 end
 
