@@ -9,3 +9,7 @@ end
 task :build do
   system 'gem build spank.gemspec'
 end
+
+task :publish => :build do
+  system 'gem push *.gem'
+end
