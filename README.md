@@ -98,7 +98,7 @@ Register selective interceptors.
   
   container = Container.new
   Spank::IOC.bind_to(container)
-  Spank::IOC.resolve(:item)
+  item = Spank::IOC.resolve(:item)
       
 ```
 
