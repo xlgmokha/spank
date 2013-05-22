@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    spank (0.0.1369197341)
+    spank (0.0.1369197478)
 
 GEM
   remote: https://rubygems.org/
