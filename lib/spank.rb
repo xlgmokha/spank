@@ -5,4 +5,5 @@ require 'spank/interceptor_registration.rb'
 require 'spank/invocation.rb'
 require 'spank/ioc.rb'
 require 'spank/proxy.rb'
-require "spank/version"
+require 'spank/interceptor_chain'
+require 'spank/version'

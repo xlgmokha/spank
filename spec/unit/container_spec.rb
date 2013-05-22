@@ -108,9 +108,13 @@ module Spank
       end
     end
 
-    context "when registering an interceptor" do
+    context "when registering interceptors" do
       class TestInterceptor
-        attr_reader :called
+        attr_reader :called, :name
+        def initialize(name)
+          @name = name
+          @called = false
+        end
         def intercept(invocation)
           @called = true
           invocation.proceed
@@ -126,15 +130,21 @@ module Spank
       end
 
       let(:command) { TestCommand.new }
-      let(:interceptor) { TestInterceptor.new }
+      let(:interceptor) { TestInterceptor.new("first") }
+      let(:other_interceptor) { TestInterceptor.new("second") }
 
       before :each do
-        sut.register(:command) { command }.intercept(:run).with(interceptor)
+        sut.register(:command) { command }.intercept(:run).with(interceptor).and(other_interceptor)
+        sut.register(:single_command) { command }.intercept(:run).with(interceptor)
         sut.resolve(:command).run("hi")
       end
 
-      it "should allow the interceptor to intercept calls to the target" do
+      it "should allow the first interceptor to intercept calls to the target" do
         interceptor.called.should be_true
+      end
+
+      it "should allow the second interceptor to intercept calls to the target" do
+        other_interceptor.called.should be_true
       end
 
       it "should forward the args to the command" do

@@ -1,11 +1,13 @@
 module Spank
   class Proxy
-    def initialize(target)
+    def initialize(target, interceptor_chain = InterceptorChain.new)
       @target = target
+      @interceptor_chain = interceptor_chain
     end
 
     def add_interceptor(method, interceptor)
-      self.extend(create_module_for(method, interceptor))
+      @interceptor_chain.push(interceptor)
+      self.extend(create_module_for(method))
       self
     end
 
@@ -23,11 +25,13 @@ module Spank
       end
     end
 
-    def create_module_for(method, interceptor)
+    def create_module_for(method)
       Module.new do
         define_method(method.to_sym) do |*args, &block|
           invocation = create_invocation_for(method, args, block)
-          interceptor.intercept(invocation)
+          @interceptor_chain.each do |interceptor|
+            interceptor.intercept(invocation)
+          end
           invocation.result
         end
       end
