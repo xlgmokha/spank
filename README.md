@@ -3,6 +3,7 @@
 A simple light weight inversion of control container written in ruby.
 
 [![Build Status](https://travis-ci.org/mokhan/spank.png)](https://travis-ci.org/mokhan/spank)
+[![Code Climate](https://codeclimate.com/github/mokhan/spank.png)](https://codeclimate.com/github/mokhan/spank)
 
 ## Installation
 
