@@ -3,6 +3,7 @@ module Spank
     def self.bind_to(container)
       @@container = container
     end
+
     def self.resolve(symbol)
       @@container.resolve(symbol)
     end

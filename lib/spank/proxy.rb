@@ -29,9 +29,7 @@ module Spank
       Module.new do
         define_method(method.to_sym) do |*args, &block|
           invocation = create_invocation_for(method, args, block)
-          @interceptor_chain.each do |interceptor|
-            interceptor.intercept(invocation)
-          end
+          @interceptor_chain.intercept(invocation)
           invocation.result
         end
       end
