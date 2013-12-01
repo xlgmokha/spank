@@ -2,8 +2,8 @@ require "spec_helper"
 
 describe Spank::IOC do
   context "when bound to a container" do
-    let(:container) { fake }
-    let(:component) { fake }
+    let(:container) { double }
+    let(:component) { double }
 
     before :each do
       container.stub(:resolve).with(:idbconnection).and_return(component)

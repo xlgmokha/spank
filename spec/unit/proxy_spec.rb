@@ -3,19 +3,19 @@ require "spec_helper"
 module Spank
   describe Proxy do
     let(:sut) { Proxy.new(target) }
-    let(:target) { fake }
+    let(:target) { double("target", :greet => nil) }
 
     context "when invoking a method" do
       before { sut.greet('blah') }
 
       it "should send the message to the target" do
-        target.should have_received(:greet, 'blah')
+        target.should have_received(:greet).with('blah')
       end
     end
 
     context "when an interceptor is registered" do
       context "when invoking a method" do
-        let(:interceptor) { fake }
+        let(:interceptor) { double('interceptor', :intercept => "") }
 
         before :each do
           sut.add_interceptor(:greet, interceptor)
@@ -25,6 +25,7 @@ module Spank
           interceptor.should have_received(:intercept)
         end
       end
+
       context "when invoking a method with a block" do
         it "should pass the block to the target" do
           proxy = Proxy.new([])

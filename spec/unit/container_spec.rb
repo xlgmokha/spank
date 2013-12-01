@@ -27,8 +27,8 @@ module Spank
     end
 
     describe "when multiple items are registered with the same key" do
-      let(:jeans) { fake }
-      let(:dress_pants) { fake }
+      let(:jeans) { double("jeans") }
+      let(:dress_pants) { double("dress pants") }
 
       before :each do
         sut.register(:pants) { jeans }
@@ -60,7 +60,7 @@ module Spank
 
     context "when a component is registered as a singleton" do
       before :each do
-        sut.register(:singleton) { fake }.as_singleton
+        sut.register(:singleton) { Object.new }.as_singleton
       end
 
       it "should return the same instance of that component each time it is resolved" do
@@ -88,8 +88,8 @@ module Spank
       end
 
       context "when the dependencies have been registered" do
-        let(:mom) { fake }
-        let(:dad) { fake }
+        let(:mom) { double("mom") }
+        let(:dad) { double("dad") }
 
         before :each do
           sut.register(:mom) { mom }
