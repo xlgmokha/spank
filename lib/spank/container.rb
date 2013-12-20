@@ -1,10 +1,4 @@
 module Spank
-  class ContainerError < Exception
-    def intialize(message)
-      @message = message
-    end
-  end
-
   class Container
     def initialize
       @items = {}
