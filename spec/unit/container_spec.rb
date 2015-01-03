@@ -39,7 +39,8 @@ module Spank
 
       context "when resolving all items" do
         it "returns them all" do
-          expect(subject.resolve_all(:pants)).to match_array([jeans, dress_pants])
+          results = subject.resolve_all(:pants)
+          expect(results).to match_array([jeans, dress_pants])
         end
       end
 
@@ -55,7 +56,7 @@ module Spank
         subject.register(:singleton) { Object.new }.as_singleton
       end
 
-      it "returns the same instance of that component each time it is resolved" do
+      it "returns the same instance of the component every time" do
         expect(subject.resolve(:singleton)).to eql(subject.resolve(:singleton))
       end
     end
@@ -63,7 +64,7 @@ module Spank
     context "when invoking the factory method" do
       it "passes the container through to the block" do
         result = nil
-        subject.register(:item){ |item| result = item }
+        subject.register(:item) { |item| result = item }
         subject.resolve(:item)
         expect(result).to eql(subject)
       end
@@ -131,8 +132,12 @@ module Spank
       let(:other_interceptor) { TestInterceptor.new("second") }
 
       before :each do
-        subject.register(:command) { command }.intercept(:run).with(interceptor).and(other_interceptor)
-        subject.register(:single_command) { command }.intercept(:run).with(interceptor)
+        subject
+          .register(:command) { command }
+          .intercept(:run).with(interceptor).and(other_interceptor)
+        subject
+          .register(:single_command) { command }
+          .intercept(:run).with(interceptor)
         subject.resolve(:command).run("hi")
       end
 
@@ -146,7 +151,7 @@ module Spank
 
       it "forwards the args to the command" do
         expect(command.called).to be_truthy
-        expect(command.received).to match_array(['hi'])
+        expect(command.received).to match_array(["hi"])
       end
     end
   end

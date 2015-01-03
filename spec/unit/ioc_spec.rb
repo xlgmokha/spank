@@ -8,7 +8,9 @@ describe Spank::IOC do
     let(:component) { double }
 
     before :each do
-      allow(container).to receive(:resolve).with(:dbconnection).and_return(component)
+      allow(container).to receive(:resolve)
+        .with(:dbconnection)
+        .and_return(component)
       Spank::IOC.bind_to(container)
     end
 
