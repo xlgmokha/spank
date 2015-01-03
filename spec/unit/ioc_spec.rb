@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Spank::IOC do
   after :each do
     Spank::IOC.unbind
@@ -10,14 +8,12 @@ describe Spank::IOC do
     let(:component) { double }
 
     before :each do
-      allow(container).to receive(:resolve).with(:idbconnection).and_return(component)
+      allow(container).to receive(:resolve).with(:dbconnection).and_return(component)
       Spank::IOC.bind_to(container)
     end
 
-    let(:result) { Spank::IOC.resolve(:idbconnection) }
-
     it "resolves the item from the container" do
-      expect(result).to eq(component)
+      expect(Spank::IOC.resolve(:dbconnection)).to eq(component)
     end
   end
 

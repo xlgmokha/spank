@@ -1,5 +1,3 @@
-require "spec_helper"
-
 module Spank
   describe Container do
     subject { Container.new }
