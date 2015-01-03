@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Spank::VERSION
   spec.authors       = ["mo khan"]
   spec.email         = ["mo@mokhan.ca"]
-  spec.description   = %q{A simple ruby container}
+  spec.description   = %q{A lightweight ruby inversion of control (IOC) container}
   spec.summary       = %q{spank!}
-  spec.homepage      = "http://github.com/mokhan/spank"
+  spec.homepage      = "https://github.com/mokhan/spank"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -19,8 +19,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   spec.required_ruby_version = '>= 2.0.0'
 
-  spec.add_development_dependency "bundler", "~> 1.3"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "rspec"
-  spec.add_development_dependency "simplecov"
+  spec.add_development_dependency "bundler"
+  spec.add_development_dependency "rake", '~> 10.4'
+  spec.add_development_dependency "rspec", '~> 3.1'
+  spec.add_development_dependency "simplecov", '~> 0.9'
 end
