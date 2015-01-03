@@ -1,4 +1,12 @@
 language: ruby
 rvm:
-  - 2.0.0
-  - 2.2.0
+- 2.0.0
+- 2.2.0
+deploy:
+  provider: rubygems
+  api_key:
+    secure: iVIcz0B2sp3Tj2bGEA0CTxSoLWDAjw+L94g6h9GKntfUKasnayn8BYOEXObIdcl2o0LQe3d68UXmnBbXSi7eFW6yyBhsRn0op3rTxkxh0Lez6jEZagcGIgtCwmmf+ppthYSXi+s0kwhW3kAM797ULpV6aagHBs93PuNh1XIbQs0=
+  gem: spank
+  on:
+    tags: true
+    repo: mokhan/spank
