@@ -10,14 +10,14 @@ describe Spank::IOC do
     let(:component) { double }
 
     before :each do
-      container.stub(:resolve).with(:idbconnection).and_return(component)
+      allow(container).to receive(:resolve).with(:idbconnection).and_return(component)
       Spank::IOC.bind_to(container)
     end
 
     let(:result) { Spank::IOC.resolve(:idbconnection) }
 
     it "resolves the item from the container" do
-      result.should == component
+      expect(result).to eq(component)
     end
   end
 

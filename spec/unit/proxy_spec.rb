@@ -9,7 +9,7 @@ module Spank
       before { sut.greet('blah') }
 
       it "should send the message to the target" do
-        target.should have_received(:greet).with('blah')
+        expect(target).to have_received(:greet).with('blah')
       end
     end
 
@@ -22,7 +22,7 @@ module Spank
           sut.greet("blah")
         end
         it "should allow the interceptor to intercept the call" do
-          interceptor.should have_received(:intercept)
+          expect(interceptor).to have_received(:intercept)
         end
       end
 
