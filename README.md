@@ -5,6 +5,7 @@ A simple light weight inversion of control container written in ruby.
 [![Build Status](https://travis-ci.org/mokhan/spank.png)](https://travis-ci.org/mokhan/spank)
 [![Code Climate](https://codeclimate.com/github/mokhan/spank.png)](https://codeclimate.com/github/mokhan/spank)
 [![Test Coverage](https://codeclimate.com/github/mokhan/spank/badges/coverage.svg)](https://codeclimate.com/github/mokhan/spank)
+[![Gem Version](https://badge.fury.io/rb/spank.svg)](http://badge.fury.io/rb/spank)
 
 ## Installation
 
