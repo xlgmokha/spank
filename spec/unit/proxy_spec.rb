@@ -13,7 +13,7 @@ module Spank
 
     context "when an interceptor is registered" do
       context "when invoking a method" do
-        let(:interceptor) { double("interceptor", :intercept => "") }
+        let(:interceptor) { double("interceptor", intercept: "") }
 
         before :each do
           subject.add_interceptor(:greet, interceptor)

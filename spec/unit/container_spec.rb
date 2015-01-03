@@ -132,12 +132,12 @@ module Spank
       let(:other_interceptor) { TestInterceptor.new("second") }
 
       before :each do
-        subject
-          .register(:command) { command }
-          .intercept(:run).with(interceptor).and(other_interceptor)
-        subject
-          .register(:single_command) { command }
-          .intercept(:run).with(interceptor)
+        subject.
+          register(:command) { command }.
+          intercept(:run).with(interceptor).and(other_interceptor)
+        subject.
+          register(:single_command) { command }.
+          intercept(:run).with(interceptor)
         subject.resolve(:command).run("hi")
       end
 
