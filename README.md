@@ -25,7 +25,7 @@ Register a single component and resolve it.
 
 ```ruby
 
-  container = Container.new
+  container = Spank::Container.new
   container.register(:item) do |container|
     "ITEM"
   end
@@ -37,7 +37,7 @@ Register multiple items, and resolve them.
 
 ```ruby
 
-  container = Container.new
+  container = Spank::Container.new
   container.register(:pants) { jeans }
   container.register(:pants) { dress_pants }
   pants = container.resolve_all(:pants)
@@ -48,7 +48,7 @@ Register a singleton.
 
 ```ruby
 
-  container = Container.new
+  container = Spank::Container.new
   container.register(:singleton) { fake }.as_singleton
   single_instance = container.resolve(:singleton)
   same_instance = container.resolve(:singleton)
@@ -64,7 +64,7 @@ Automatic dependency resolution.
     end
   end
   
-  container = Container.new
+  container = Spank::Container.new
   container.register(:mom) { mom }
   container.register(:dad) { dad }
   child = sut.build(Child)
@@ -86,7 +86,7 @@ Register selective interceptors.
     end
   end
   
-  container = Container.new
+  container = Spank::Container.new
   container.register(:command) { Command.new }.intercept(:run).with(Interceptor.new)
   proxy = container.resolve(:command)
   proxy.run("hi")
@@ -97,7 +97,7 @@ Register selective interceptors.
 
 ```ruby
   
-  container = Container.new
+  container = Spank::Container.new
   Spank::IOC.bind_to(container)
   item = Spank::IOC.resolve(:item)
       
