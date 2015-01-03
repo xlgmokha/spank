@@ -2,27 +2,25 @@ require "spec_helper"
 
 module Spank
   describe Container do
-    let(:sut) { Container.new }
+    subject { Container.new }
 
     describe "when resolving an item that has been registered" do
       let(:registered_item) { Object.new }
 
       before :each do
-        sut.register(:item) do
+        subject.register(:item) do
           registered_item
         end
       end
 
-      let(:result) { sut.resolve(:item) }
-
-      it "should return the registered item" do
-        result.should == registered_item
+      it "returns the registered item" do
+        expect(subject.resolve(:item)).to eql(registered_item)
       end
     end
 
     describe "when resolving the container" do
-      it "should return itself" do
-        sut.resolve(:container).should == sut
+      it "returns itself" do
+        expect(subject.resolve(:container)).to eql(subject)
       end
     end
 
@@ -31,57 +29,55 @@ module Spank
       let(:dress_pants) { double("dress pants") }
 
       before :each do
-        sut.register(:pants) { jeans }
-        sut.register(:pants) { dress_pants }
+        subject.register(:pants) { jeans }
+        subject.register(:pants) { dress_pants }
       end
 
       context "when resolving a single item" do
-        let(:result) { sut.resolve(:pants) }
-
-        it "should return the first one registered" do
-          result.should == jeans
+        it "returns the first one registered" do
+          expect(subject.resolve(:pants)).to eql(jeans)
         end
       end
 
       context "when resolving all items" do
-        let(:results) { sut.resolve_all(:pants)  }
-
-        it "should return them all" do
-          results.should == [jeans, dress_pants]
+        it "returns them all" do
+          expect(subject.resolve_all(:pants)).to match_array([jeans, dress_pants])
         end
       end
 
       context "when resolving all items for an unknown key" do
-        it "should return an empty array" do
-          sut.resolve_all(:shirts).should be_empty
+        it "returns an empty array" do
+          expect(subject.resolve_all(:shirts)).to be_empty
         end
       end
     end
 
     context "when a component is registered as a singleton" do
       before :each do
-        sut.register(:singleton) { Object.new }.as_singleton
+        subject.register(:singleton) { Object.new }.as_singleton
       end
 
-      it "should return the same instance of that component each time it is resolved" do
-        sut.resolve(:singleton).should == sut.resolve(:singleton)
+      it "returns the same instance of that component each time it is resolved" do
+        expect(subject.resolve(:singleton)).to eql(subject.resolve(:singleton))
       end
     end
 
     context "when invoking the factory method" do
-      before :each do
-        sut.register(:item){ |item| @result = item }
-        sut.resolve(:item)
-      end
-
-      it "should pass the container through to the block" do
-        @result.should == sut
+      it "passes the container through to the block" do
+        result = nil
+        subject.register(:item){ |item| result = item }
+        subject.resolve(:item)
+        expect(result).to eql(subject)
       end
     end
 
     context "when automatically resolving dependencies" do
       class Child
+        attr_reader :mom, :dad
+
         def initialize(mom,dad)
+          @mom = mom
+          @dad = dad
         end
         def greeting(message)
         end
@@ -92,18 +88,21 @@ module Spank
         let(:dad) { double("dad") }
 
         before :each do
-          sut.register(:mom) { mom }
-          sut.register(:dad) { dad }
+          subject.register(:mom) { mom }
+          subject.register(:dad) { dad }
         end
 
-        it "should be able to glue the pieces together automatically" do
-          sut.build(Child).should be_a_kind_of(Child)
+        it "glues the pieces together automatically" do
+          child = subject.build(Child)
+          expect(child).to be_a_kind_of(Child)
+          expect(child.mom).to eql(mom)
+          expect(child.dad).to eql(dad)
         end
       end
 
       context "when a component cannot automatically be constructed" do
-        it "should raise an error" do
-          expect { sut.build(Child) }.to raise_error(ContainerError)
+        it "raises an error" do
+          expect { subject.build(Child) }.to raise_error(ContainerError)
         end
       end
     end
@@ -134,22 +133,22 @@ module Spank
       let(:other_interceptor) { TestInterceptor.new("second") }
 
       before :each do
-        sut.register(:command) { command }.intercept(:run).with(interceptor).and(other_interceptor)
-        sut.register(:single_command) { command }.intercept(:run).with(interceptor)
-        sut.resolve(:command).run("hi")
+        subject.register(:command) { command }.intercept(:run).with(interceptor).and(other_interceptor)
+        subject.register(:single_command) { command }.intercept(:run).with(interceptor)
+        subject.resolve(:command).run("hi")
       end
 
-      it "should allow the first interceptor to intercept calls to the target" do
-        interceptor.called.should be_true
+      it "allows the first interceptor to intercept calls to the target" do
+        expect(interceptor.called).to be_truthy
       end
 
-      it "should allow the second interceptor to intercept calls to the target" do
-        other_interceptor.called.should be_true
+      it "allows the second interceptor to intercept calls to the target" do
+        expect(other_interceptor.called).to be_truthy
       end
 
-      it "should forward the args to the command" do
-        command.called.should be_true
-        command.received.should == ['hi']
+      it "forwards the args to the command" do
+        expect(command.called).to be_truthy
+        expect(command.received).to match_array(['hi'])
       end
     end
   end
