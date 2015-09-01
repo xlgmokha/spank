@@ -6,15 +6,26 @@ module Spank
       end
 
       def resolve(symbol)
-        raise create_error unless class_variable_defined?(:@@container)
+        ensure_initialized!
         @@container.resolve(symbol)
       end
 
+      def resolve_all(symbol)
+        ensure_initialized!
+        @@container.resolve_all(symbol)
+      end
+
       def unbind
-        remove_class_variable(:@@container) if class_variable_defined?(:@@container)
+        if class_variable_defined?(:@@container)
+          remove_class_variable(:@@container)
+        end
       end
 
       private
+
+      def ensure_initialized!
+        raise create_error unless class_variable_defined?(:@@container)
+      end
 
       def create_error
         ContainerError.new("Spank::IOC.bind_to(container) has not been called.")

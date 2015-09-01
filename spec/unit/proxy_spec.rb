@@ -31,14 +31,14 @@ module Spank
             proxy.each do |x|
               raise StandardError
             end
-          end.to raise_error
+          end.to raise_error(StandardError)
         end
       end
     end
 
     context "when invoking a method that is not defined on the target" do
       it "raises an error" do
-        expect { Proxy.new("blah").goodbye }.to raise_error
+        expect { Proxy.new("blah").goodbye }.to raise_error(NoMethodError)
       end
     end
   end
