@@ -2,9 +2,7 @@
 
 A simple light weight inversion of control container written in ruby.
 
-[![Build Status](https://travis-ci.org/mokhan/spank.png)](https://travis-ci.org/mokhan/spank)
-[![Code Climate](https://codeclimate.com/github/mokhan/spank.png)](https://codeclimate.com/github/mokhan/spank)
-[![Test Coverage](https://codeclimate.com/github/mokhan/spank/badges/coverage.svg)](https://codeclimate.com/github/mokhan/spank)
+[![Build Status](https://github.com/xlgmokha/spank/workflows/ci/badge.svg)](https://github.com/xlgmokha/spank/actions)
 [![Gem Version](https://badge.fury.io/rb/spank.svg)](http://badge.fury.io/rb/spank)
 
 ## Installation
@@ -26,83 +24,72 @@ Or install it yourself as:
 Register a single component and resolve it.
 
 ```ruby
-
-  container = Spank::Container.new
-  container.register(:item) do |container|
-    "ITEM"
-  end
-  item = container.resolve(:item)
-  
+container = Spank::Container.new
+container.register(:item) do |container|
+  "ITEM"
+end
+item = container.resolve(:item)
 ```
 
 Register multiple items, and resolve them.
 
 ```ruby
-
-  container = Spank::Container.new
-  container.register(:pants) { jeans }
-  container.register(:pants) { dress_pants }
-  pants = container.resolve_all(:pants)
-  
+container = Spank::Container.new
+container.register(:pants) { jeans }
+container.register(:pants) { dress_pants }
+pants = container.resolve_all(:pants)
 ```
 
 Register a singleton.
 
 ```ruby
-
-  container = Spank::Container.new
-  container.register(:singleton) { fake }.as_singleton
-  single_instance = container.resolve(:singleton)
-  same_instance = container.resolve(:singleton)
-  
+container = Spank::Container.new
+container.register(:singleton) { fake }.as_singleton
+single_instance = container.resolve(:singleton)
+same_instance = container.resolve(:singleton)
 ```
 
 Automatic dependency resolution.
 
 ```ruby
-
-  class Child
-    def initialize(mom,dad)
-    end
+class Child
+  def initialize(mom,dad)
   end
-  
-  container = Spank::Container.new
-  container.register(:mom) { mom }
-  container.register(:dad) { dad }
-  child = sut.build(Child)
-      
+end
+
+container = Spank::Container.new
+container.register(:mom) { mom }
+container.register(:dad) { dad }
+child = sut.build(Child)
 ```
 
 Register selective interceptors.
 
 ```ruby
+class Interceptor
+  def intercept(invocation)
+    invocation.proceed
+  end
+end
 
-  class Interceptor
-    def intercept(invocation)
-      invocation.proceed
-    end
+class Command
+  def run(input)
   end
-  
-  class Command
-    def run(input)
-    end
-  end
-  
-  container = Spank::Container.new
-  container.register(:command) { Command.new }.intercept(:run).with(Interceptor.new)
-  proxy = container.resolve(:command)
-  proxy.run("hi")
-      
+end
+
+container = Spank::Container.new
+container
+  .register(:command) { Command.new }
+  .intercept(:run)
+  .with(Interceptor.new)
+proxy = container.resolve(:command)
+proxy.run("hi")
 ```
 
-[Static gateway](http://codebetter.com/jpboodhoo/2007/10/15/the-static-gateway-pattern/) to connect to the container.
-
 ```ruby
-  
-  container = Spank::Container.new
-  Spank::IOC.bind_to(container)
-  item = Spank::IOC.resolve(:item)
-      
+container = Spank::Container.new
+Spank::IOC.bind_to(container)
+item = Spank::IOC.resolve(:item)
 ```
 
 Enjoy!
