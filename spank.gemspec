@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["mo@mokhan.ca"]
   spec.description   = %q{A lightweight ruby inversion of control (IOC) container}
   spec.summary       = %q{spank!}
-  spec.homepage      = "https://github.com/mokhan/spank"
+  spec.homepage      = "https://github.com/xlgmokha/spank"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -23,5 +23,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", '~> 12.3'
   spec.add_development_dependency "rspec", '~> 3.1'
   spec.add_development_dependency "simplecov", '~> 0.9'
-  spec.add_development_dependency "codeclimate-test-reporter"
 end
